@@ -42,7 +42,11 @@ class LiveVisitors extends React.Component {
         <tr key={index}>
           <td>{index + 1}</td>
           <td>{visitor.ip}</td>
-          <td>{visitor.country}</td>
+          <td>
+            <img
+              src={`https://www.countryflags.io/${visitor.countryCode}/flat/32.png`}
+            />
+          </td>
           <td>{visitor.city}</td>
           <td>{visitor.state}</td>
           <td>{visitor.country}</td>
