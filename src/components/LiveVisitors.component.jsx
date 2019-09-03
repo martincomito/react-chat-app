@@ -1,24 +1,24 @@
 import React from 'react';
 
 import axios from 'axios';
-
+import openSocket from 'socket.io-client';
 import { Table } from 'reactstrap';
 
+const socket = openSocket('http://localhost:6600');
 class LiveVisitors extends React.Component {
   state = {
     visitors: [],
   };
 
   componentDidMount() {
-    axios.get('http://geoplugin.net/json.gp').then(res => {
+    axios.get('http://geoplugin.net/json.gp').then(response => {
       const {
         geoplugin_request,
         geoplugin_countryCode,
         geoplugin_city,
         geoplugin_region,
         geoplugin_countryName,
-      } = res.data;
-
+      } = response.data;
       const visitor = {
         ip: geoplugin_request,
         countryCode: geoplugin_countryCode,
@@ -27,7 +27,11 @@ class LiveVisitors extends React.Component {
         country: geoplugin_countryName,
       };
 
-      this.setState({ visitors: [visitor] });
+      socket.emit('new_visitor', visitor);
+
+      socket.on('visitors', visitors => {
+        this.setState({ visitors: visitors });
+      });
     });
   }
 
@@ -35,7 +39,7 @@ class LiveVisitors extends React.Component {
     const { visitors } = this.state;
     return visitors.map((visitor, index) => {
       return (
-        <tr>
+        <tr key={index}>
           <td>{index + 1}</td>
           <td>{visitor.ip}</td>
           <td>{visitor.country}</td>
