@@ -4,7 +4,7 @@ import axios from 'axios';
 import openSocket from 'socket.io-client';
 import { Table } from 'reactstrap';
 
-const socket = openSocket('http://localhost:6600');
+const socket = openSocket('http://localhost:6700');
 class LiveVisitors extends React.Component {
   state = {
     visitors: [],
@@ -44,6 +44,7 @@ class LiveVisitors extends React.Component {
           <td>{visitor.ip}</td>
           <td>
             <img
+              alt={`${visitor.geoplugin_countryName}´s flag`}
               src={`https://www.countryflags.io/${visitor.countryCode}/flat/32.png`}
             />
           </td>
