@@ -10,6 +10,10 @@ class LiveVisitors extends React.Component {
     visitors: [],
   };
 
+  componentWillUnmount() {
+    socket.removeAllListeners('new_visitor');
+  }
+
   componentDidMount() {
     axios.get('http://geoplugin.net/json.gp').then(response => {
       const {
