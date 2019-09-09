@@ -13,9 +13,7 @@ class PublicChat extends React.Component {
   }
 
   handleNameInputChange = event => {
-    this.setState({ inputValue: event.target.value }, () =>
-      console.log(this.state.inputValue)
-    );
+    this.setState({ inputValue: event.target.value });
   };
 
   handleClickJoin = () => {
